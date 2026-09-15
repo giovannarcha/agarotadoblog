@@ -1,6 +1,10 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <h2>Últimos posts</h2>
+    {% if categoria_filtrada %}
+        <h2>Categoria: {{ categoria_filtrada.nome }}</h2>
+    {% else %}
+        <h2>Últimos posts</h2>
+    {% endif %}
     {% for post in posts %}
         <article>
             <h3><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></h3>

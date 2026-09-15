@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Meus posts</h2>
+    <a href="{% url 'criar_post' %}">+ Novo post</a>
+
+    {% for post in posts %}
+        <article>
+            <h3>{{ post.titulo }}</h3>
+            <p>Status: {{ post.get_status_display }}</p>
+            <a href="{% url 'editar_post' post.slug %}">Editar</a>
+            {% if post.status != 'ARQUIVADO' %}
+                <form method="post" action="{% url 'avancar_status' post.slug %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if post.status == 'RASCUNHO' %}Enviar para revisão
+                        {% elif post.status == 'EM_REVISAO' %}Publicar
+                        {% elif post.status == 'PUBLICADO' %}Arquivar
+                        {% endif %}
+                    </button>
+                </form>
+            {% endif %}
+        </article>
+    {% empty %}
+        <p>Você ainda não criou nenhum post.</p>
+    {% endfor %}
+{% endblock %}

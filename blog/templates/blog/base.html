@@ -2,14 +2,48 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/style.css' %}">
     <title>{% block title %}Meu Cantinho{% endblock %}</title>
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'lista_posts' %}">✨ Meu Cantinho ✨</a></h1>
+    <nav>
+        {% if user.is_authenticated %}
+            Olá, {{ user.username }} | <a href="{% url 'meus_posts' %}">Meus posts</a> | <a href="{% url 'logout' %}">Sair</a>
+        {% else %}
+            <a href="{% url 'login' %}">Entrar</a>
+        {% endif %}
+    </nav>
+        <h1><a href="{% url 'lista_posts' %}"> Meu Cantinho </a></h1>
     </header>
-    <main>
-        {% block content %}{% endblock %}
+    <main class="layout">
+        <div class="conteudo">
+            {% block content %}{% endblock %}
+        </div>
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>Posts recentes</h3>
+                <ul>
+                    {% for post in sidebar_posts_recentes %}
+                        <li><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Categorias</h3>
+                <ul>
+                    {% for cat in sidebar_categorias %}
+                        <li><a href="{% url 'posts_por_categoria' cat.id %}">{{ cat.nome }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Total de posts</h3>
+                <p>{{ sidebar_total_posts }} publicados</p>
+            </div>
+        </aside>
     </main>
 </body>
 </html>
+

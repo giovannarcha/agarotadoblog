@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(180deg, #cdeffd 0%, #f9dfe8 50%, #e8d5f7 100%);
+    background-attachment: fixed;
+    color: #4a3b52;
+}
+
+header {
+    background: linear-gradient(90deg, #ffb6d9, #b5d8ff);
+    padding: 24px;
+    text-align: center;
+    border-bottom: 4px dashed #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header h1 a {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Henny Penny", system-ui;
+    font-size: 5rem;
+    text-shadow: 2px 2px 0 #d982b5;
+}
+
+main {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+article {
+    background: #fffafd;
+    border: 2px solid #ffd6ec;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0 #ffd6ec;
+}
+
+article h3 a, article h2 {
+    color: #d15a9e;
+    font-family: 'Comic Neue', cursive;
+}
+
+article h3 a {
+    text-decoration: none;
+}
+
+section {
+    background: #f5f0ff;
+    border: 2px dashed #c9a8ec;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+form input, form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ffd6ec;
+    border-radius: 10px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+button {
+    background: #ff9dc4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #ff7fb3;
+}
+
+:root {
+    --cor-fundo: #FFFDF5;
+    --cor-rosa: #F7C6D9;
+    --cor-amarelo: #FFF3B0;
+    --cor-verde: #C9EFC9;
+    --cor-lilas: #E3D9F7;
+    --cor-texto: #3A3A3A;
+    --borda-fofa: 12px;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    background-image: repeating-linear-gradient(
+        90deg,
+        var(--cor-rosa) 0px, var(--cor-rosa) 2px,
+        transparent 2px, transparent 40px
+    );
+    color: var(--cor-texto);
+    font-family: system-ui, sans-serif;
+    margin: 0;
+}
+
+header h1 {
+    font-family: "Henny Penny", system-ui;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.widget {
+    background: #fff;
+    border: 3px solid var(--cor-lilas);
+    border-radius: var(--borda-fofa);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.widget h3 {
+    margin-top: 0;
+    background: var(--cor-amarelo);
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+}
