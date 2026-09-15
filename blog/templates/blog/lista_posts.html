@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Últimos posts</h2>
+    {% for post in posts %}
+        <article>
+            <h3><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></h3>
+            <p>{{ post.categoria.nome }} — por {{ post.autor.username }}</p>
+        </article>
+    {% empty %}
+        <p>Nenhum post publicado ainda.</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.titulo }}{% endblock %}
+{% block content %}
+    <article>
+        <h2>{{ post.titulo }}</h2>
+        <p>{{ post.categoria.nome }} — por {{ post.autor.username }}</p>
+        <div>{{ post.conteudo|linebreaks }}</div>
+        <p>Tags: {% for tag in post.tags.all %}{{ tag.nome }} {% endfor %}</p>
+    </article>
+
+    <section>
+        <h3>Comentários ({{ comentarios.count }})</h3>
+        {% for c in comentarios %}
+            <p><strong>{{ c.autor_nome }}:</strong> {{ c.texto }}</p>
+        {% empty %}
+            <p>Seja a primeira a comentar!</p>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Comentar</button>
+        </form>
+    </section>
+{% endblock %}0

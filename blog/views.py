@@ -27,4 +27,3 @@ def detalhe_post(request, slug):
         'comentarios': comentarios,
         'form': form,
     })
-
