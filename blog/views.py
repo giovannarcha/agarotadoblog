@@ -86,3 +86,6 @@ def posts_por_categoria(request, categoria_id):
         'posts': posts,
         'categoria_filtrada': categoria,
     })
+
+def welcome(request):
+    return render(request, 'blog/welcome.html')

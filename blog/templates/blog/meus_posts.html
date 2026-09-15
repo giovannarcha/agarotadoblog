@@ -1,13 +1,13 @@
 {% extends 'blog/base.html' %}
 {% block content %}
     <h2>Meus posts</h2>
-    <a href="{% url 'criar_post' %}">+ Novo post</a>
+    <a href="{% url 'criar_post' %}" class="btn-pill">+ Novo post</a>
 
     {% for post in posts %}
         <article>
             <h3>{{ post.titulo }}</h3>
             <p>Status: {{ post.get_status_display }}</p>
-            <a href="{% url 'editar_post' post.slug %}">Editar</a>
+            <a href="{% url 'editar_post' post.slug %}" class="btn-pill">Editar</a>
             {% if post.status != 'ARQUIVADO' %}
                 <form method="post" action="{% url 'avancar_status' post.slug %}" style="display:inline">
                     {% csrf_token %}
