@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from .models import Post
 from .forms import ComentarioForm, PostForm
 from .models import Post, Categoria
@@ -89,3 +90,15 @@ def posts_por_categoria(request, categoria_id):
 
 def welcome(request):
     return render(request, 'blog/welcome.html')
+
+def perfil(request):
+    User = get_user_model()
+    autor = User.objects.filter(is_superuser=True).first()
+    posts = Post.objects.filter(
+        autor=autor,
+        status=Post.Status.PUBLICADO
+    ).order_by('-criado_em') if autor else []
+    return render(request, 'blog/perfil.html', {
+        'autor': autor,
+        'posts': posts,
+    })

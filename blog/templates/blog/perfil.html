@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Perfil ✦</h2>
+
+    {% if autor %}
+        <div class="topico">
+            <h3>{{ autor.username }}</h3>
+            <p>Autora deste cantinho — apaixonada por cultura pop, música e boas descobertas. Quer saber mais sobre mim? <a href="{% url 'welcome' %}">Clique aqui</a>.</p>
+        </div>
+    {% endif %}
+
+    <h3>Posts publicados</h3>
+    {% for post in posts %}
+        <article>
+            <h3><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></h3>
+            <p>{{ post.categoria.nome }} — {{ post.criado_em|date:"d/m/Y" }}</p>
+        </article>
+    {% empty %}
+        <p>Nenhum post publicado ainda.</p>
+    {% endfor %}
+{% endblock %}

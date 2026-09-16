@@ -10,13 +10,15 @@
     <header>
     <nav>
     {% if user.is_authenticated %}
-        <span class="saudacao">Olá, {{ user.username }}</span>
-        <a href="{% url 'welcome' %}">Welcome</a>
-        <a href="{% url 'meus_posts' %}">Meus posts</a>
-        <a href="{% url 'logout' %}">Sair</a>
+    <span class="saudacao">Olá, {{ user.username }}</span>
+    <a href="{% url 'welcome' %}">Welcome</a>
+    <a href="{% url 'perfil' %}">Perfil</a>
+    <a href="{% url 'meus_posts' %}">Meus posts</a>
+    <a href="{% url 'logout' %}">Sair</a>
     {% else %}
-        <a href="{% url 'welcome' %}">Welcome</a>
-        <a href="{% url 'login' %}">Entrar</a>
+    <a href="{% url 'welcome' %}">Welcome</a>
+    <a href="{% url 'perfil' %}">Perfil</a>
+    <a href="{% url 'login' %}">Entrar</a>
     {% endif %}
     </nav>  
         <h1><a href="{% url 'lista_posts' %}">♡ Meu Cantinho ♡</a></h1>

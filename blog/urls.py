@@ -10,5 +10,6 @@ urlpatterns = [
     path('meus-posts/<slug:slug>/avancar/', views.avancar_status, name='avancar_status'),
     path('categoria/<int:categoria_id>/', views.posts_por_categoria, name='posts_por_categoria'),
     path('welcome/', views.welcome, name='welcome'),
+    path('perfil/', views.perfil, name='perfil'),
 ]
 
