@@ -5,12 +5,27 @@
     {% else %}
         <h2>Últimos posts</h2>
     {% endif %}
+
+    <form method="get" class="busca-archive">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar por título...">
+    {% if categoria_selecionada %}
+        <input type="hidden" name="categoria" value="{{ categoria_selecionada }}">
+    {% endif %}
+    <button type="submit">🔍</button>
+    </form>
+
+    <div class="filtro-categorias">
+    <a href="{% url 'lista_posts' %}{% if query %}?q={{ query }}{% endif %}" class="pill {% if not categoria_selecionada %}pill-ativo{% endif %}">Todas</a>
+    {% for cat in categorias %}
+        <a href="?categoria={{ cat.id }}{% if query %}&q={{ query }}{% endif %}" class="pill {% if categoria_selecionada == cat.id|stringformat:'s' %}pill-ativo{% endif %}">{{ cat.nome }}</a>
+    {% endfor %}
+    </div>
     {% for post in posts %}
         <article>
             <h3><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></h3>
             <p>{{ post.categoria.nome }} — por {{ post.autor.username }}</p>
         </article>
     {% empty %}
-        <p>Nenhum post publicado ainda.</p>
+        <p>Nenhum post encontrado.</p>
     {% endfor %}
 {% endblock %}

@@ -11,8 +11,3 @@ class ComentarioForm(forms.ModelForm):
             'texto': forms.Textarea(attrs={'placeholder': 'Deixe seu comentário...', 'rows': 4}),
         }
 
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['titulo', 'conteudo', 'imagem_capa', 'categoria', 'tags']
-

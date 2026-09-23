@@ -9,8 +9,22 @@ from .forms import ComentarioForm, PostForm
 
 def lista_posts(request):
     posts = Post.objects.filter(status=Post.Status.PUBLICADO).order_by('-criado_em')
-    return render(request, 'blog/lista_posts.html', {'posts': posts})
 
+    query = request.GET.get('q', '')
+    categoria_id = request.GET.get('categoria', '')
+
+    if query:
+        posts = posts.filter(Q(titulo__icontains=query))
+
+    if categoria_id:
+        posts = posts.filter(categoria_id=categoria_id)
+
+    return render(request, 'blog/lista_posts.html', {
+        'posts': posts,
+        'query': query,
+        'categoria_selecionada': categoria_id,
+        'categorias': Categoria.objects.all(),
+    })
 
 def detalhe_post(request, slug):
     post = get_object_or_404(Post, slug=slug, status=Post.Status.PUBLICADO)
