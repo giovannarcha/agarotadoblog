@@ -356,6 +356,25 @@ nav .saudacao {
     margin: 20px 0;
 }
 
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.posts-recentes .grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.posts-recentes .card-post img {
+    height: 220px;
+}
+
+.posts-recentes .card-post-info h3 {
+    font-size: 1.3rem;
+}
+
 .card-post {
     background: #fff;
     border-radius: 16px;

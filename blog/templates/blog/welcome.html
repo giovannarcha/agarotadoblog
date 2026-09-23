@@ -48,7 +48,7 @@
         </div>
     </section>
 
-    <section class="archive">
+    <section class="archive" id="archive">
         <h2>Archive</h2>
 
         <form method="get" class="busca-archive">
@@ -82,18 +82,18 @@
 
         <div class="paginacao">
             {% if pagina_atual.has_previous %}
-                <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">First</a>
-                <a href="?page={{ pagina_atual.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">‹ Back</a>
-            {% endif %}
+        <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}#archive">First</a>
+        <a href="?page={{ pagina_atual.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}#archive">‹ Back</a>
+         {% endif %}
 
-            {% for num in pagina_atual.paginator.page_range %}
-                <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}"
-                   class="{% if num == pagina_atual.number %}pagina-ativa{% endif %}">{{ num }}</a>
+    {% for num in pagina_atual.paginator.page_range %}
+        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}#archive"
+           class="{% if num == pagina_atual.number %}pagina-ativa{% endif %}">{{ num }}</a>
             {% endfor %}
 
             {% if pagina_atual.has_next %}
-                <a href="?page={{ pagina_atual.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">Next ›</a>
-                <a href="?page={{ pagina_atual.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">Last</a>
+        <a href="?page={{ pagina_atual.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}#archive">Next ›</a>
+        <a href="?page={{ pagina_atual.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}#archive">Last</a>
             {% endif %}
         </div>
     </section>
