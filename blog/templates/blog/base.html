@@ -8,19 +8,20 @@
 </head>
 <body>
     <header>
-    <nav>
-    {% if user.is_authenticated %}
-    <span class="saudacao">Olá, {{ user.username }}</span>
-    <a href="{% url 'welcome' %}">Welcome</a>
-    <a href="{% url 'perfil' %}">Perfil</a>
-    <a href="{% url 'meus_posts' %}">Meus posts</a>
-    <a href="{% url 'logout' %}">Sair</a>
-    {% else %}
-    <a href="{% url 'welcome' %}">Welcome</a>
-    <a href="{% url 'perfil' %}">Perfil</a>
-    <a href="{% url 'login' %}">Entrar</a>
-    {% endif %}
-    </nav>  
+        <nav>
+            {% if user.is_authenticated %}
+                <span class="saudacao">Olá, {{ user.username }}</span>
+                <a href="{% url 'welcome' %}">Welcome</a>
+                <a href="{% url 'meus_posts' %}">Meus posts</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-sair">Sair</button>
+                </form>
+            {% else %}
+                <a href="{% url 'welcome' %}">Welcome</a>
+                <a href="{% url 'login' %}">Entrar</a>
+            {% endif %}
+        </nav>
         <h1><a href="{% url 'lista_posts' %}">♡ Meu Cantinho ♡</a></h1>
     </header>
     <main class="layout">
@@ -28,14 +29,7 @@
             {% block content %}{% endblock %}
         </div>
         <aside class="sidebar">
-            <div class="widget">
-                <h3>Posts recentes</h3>
-                <ul>
-                    {% for post in sidebar_posts_recentes %}
-                        <li><a href="{% url 'detalhe_post' post.slug %}">{{ post.titulo }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% block sidebar_extra %}{% endblock %}
             <div class="widget">
                 <h3>Categorias</h3>
                 <ul>
@@ -52,4 +46,3 @@
     </main>
 </body>
 </html>
-

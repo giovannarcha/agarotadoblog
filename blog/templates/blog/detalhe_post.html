@@ -1,10 +1,12 @@
 {% extends 'blog/base.html' %}
-{% block title %}{{ post.titulo }}{% endblock %}
+{% block sidebar_extra %}
+{% include 'blog/_sidebar_extra.html' %}
+{% endblock %}
 {% block content %}
     <article>
         <h2>{{ post.titulo }}</h2>
         <p>{{ post.categoria.nome }} — por {{ post.autor.username }}</p>
-        <div>{{ post.conteudo|linebreaks }}</div>
+        <div>{% autoescape off %}{{ post.conteudo|linebreaks }}{% endautoescape %}</div>
         <p>Tags: {% for tag in post.tags.all %}{{ tag.nome }} {% endfor %}</p>
     </article>
 

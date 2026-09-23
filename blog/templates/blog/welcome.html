@@ -1,30 +1,100 @@
 {% extends 'blog/base.html' %}
+{% load static %}
+
+{% block sidebar_extra %}
+    {% include 'blog/_sidebar_extra.html' %}
+{% endblock %}
+
 {% block content %}
-    <h2>Sobre mim ✦</h2>
+    <h2>Sobre o Blog ✦</h2>
     <p>
-        Oi! Seja muito bem-vinda (e bem-vindo) ao meu cantinho oficial na
-        internet. Este blog nasceu do desejo de ter um espaço 100% meu,
-        livre das limitações das redes sociais, onde posso transformar
-        pensamentos soltos, teorias da madrugada e descobertas em
-        conversas reais.
+        Este blog surgiu da ideia de organizar meus pensamentos e ideias
+        em um só lugar — um mundo à parte da minha cabeça, guardando
+        informações sobre os meus gostos mais especiais.
     </p>
 
     <div class="grid-topicos">
         <div class="topico">
-            <h3>🎬 Filmes & Séries</h3>
-            <p>De maratonas de fim de semana a reflexões sinceras sobre aquele episódio chocante.</p>
+            <h3>✨ Cultura Pop</h3>
+            <p>Música, k-pop, celebridades e tudo que está bombando no momento.</p>
         </div>
         <div class="topico">
-            <h3>🎧 Música & K-pop</h3>
-            <p>Análises de comebacks, teorias de videoclipes, indicações de álbuns e playlists.</p>
+            <h3>🎬 Filmes, Animes & Livros</h3>
+            <p>Resenhas, recomendações e reflexões sobre histórias que marcam.</p>
         </div>
         <div class="topico">
-            <h3>📖 Descobertas & cotidiano</h3>
-            <p>Livros favoritos, reflexões do dia a dia e pequenas coisas que deixam a rotina mais leve.</p>
-        </div>
-        <div class="topico">
-            <h3>💻 Bastidores</h3>
-            <p>A jornada de criar este blog do zero, aprendendo a programar e moldando cada linha de código.</p>
+            <h3>🌷 Reflexões & Cotidiano</h3>
+            <p>Pensamentos soltos, pequenas coisas que deixam a rotina mais leve.</p>
         </div>
     </div>
+
+    <section class="posts-recentes">
+        <h2>Posts recentes</h2>
+        <div class="grid-cards">
+            {% for post in posts_recentes %}
+                <a href="{% url 'detalhe_post' post.slug %}" class="card-post">
+                    {% if post.imagem_capa %}
+                        <img src="{{ post.imagem_capa.url }}" alt="{{ post.titulo }}">
+                    {% endif %}
+                    <div class="card-post-info">
+                        <span class="card-data">{{ post.criado_em|date:"d M, Y" }}</span>
+                        <h3>{{ post.titulo }}</h3>
+                        <span class="card-autor">{{ post.autor.username }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p>Nenhum post publicado ainda.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="archive">
+        <h2>Archive</h2>
+
+        <form method="get" class="busca-archive">
+            <input type="text" name="q" value="{{ query }}" placeholder="Buscar posts...">
+            <button type="submit">🔍</button>
+        </form>
+
+        <div class="filtro-categorias">
+            <a href="{% url 'welcome' %}" class="pill {% if not categoria_selecionada %}pill-ativo{% endif %}">Todas</a>
+            {% for cat in categorias %}
+                <a href="?categoria={{ cat.id }}" class="pill {% if categoria_selecionada == cat.id|stringformat:'s' %}pill-ativo{% endif %}">{{ cat.nome }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="grid-cards">
+            {% for post in pagina_atual %}
+                <a href="{% url 'detalhe_post' post.slug %}" class="card-post">
+                    {% if post.imagem_capa %}
+                        <img src="{{ post.imagem_capa.url }}" alt="{{ post.titulo }}">
+                    {% endif %}
+                    <div class="card-post-info">
+                        <span class="card-data">{{ post.criado_em|date:"d M, Y" }}</span>
+                        <h3>{{ post.titulo }}</h3>
+                        <span class="card-comentarios">💬 {{ post.num_comentarios }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <p>Nenhum post encontrado.</p>
+            {% endfor %}
+        </div>
+
+        <div class="paginacao">
+            {% if pagina_atual.has_previous %}
+                <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">First</a>
+                <a href="?page={{ pagina_atual.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">‹ Back</a>
+            {% endif %}
+
+            {% for num in pagina_atual.paginator.page_range %}
+                <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}"
+                   class="{% if num == pagina_atual.number %}pagina-ativa{% endif %}">{{ num }}</a>
+            {% endfor %}
+
+            {% if pagina_atual.has_next %}
+                <a href="?page={{ pagina_atual.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">Next ›</a>
+                <a href="?page={{ pagina_atual.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">Last</a>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

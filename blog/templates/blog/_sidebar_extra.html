@@ -1,0 +1,25 @@
+{% load static %}
+<div class="widget widget-player">
+    <h3>🎧 Tocando agora</h3>
+    <iframe
+        src="https://open.spotify.com/embed/track/5ocSQW5sIUIOFojwXEz9Ki?theme=0"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+    </iframe>
+</div>
+
+<div class="widget widget-criadora">
+    <h3>Conheça a criadora ♡</h3>
+    <div class="perfil-criadora">
+        <img src="{% static 'blog/img/minha-foto.jpeg' %}" alt="Foto de Giovanna" class="foto-redonda">
+    </div>
+    <div class="bio-criadora">
+        <h4>Giovanna</h4>
+        <p><em>
+            Escreve aqui sua apresentação — quem você é, o que ama fazer,
+            seus interesses, o que te motivou a criar esse cantinho.
+            Pode ser bem pessoal, é o seu espaço!
+        </em></p>
+    </div>
+</div>
