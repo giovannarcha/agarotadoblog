@@ -6,11 +6,12 @@
     {% for post in posts %}
         <article>
             <h3>{{ post.titulo }}</h3>
-            <p>Status: {{ post.get_status_display }}</p>
+            <p>Blog: {{ post.blog.nome }} · Status: {{ post.get_status_display }}</p>
             <a href="{% url 'editar_post' post.slug %}" class="btn-pill">Editar</a>
-            {% if post.status != 'ARQUIVADO' %}
+            {% if post.pode_avancar %}
                 <form method="post" action="{% url 'avancar_status' post.slug %}" style="display:inline">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="meus_posts">
                     <button type="submit">
                         {% if post.status == 'RASCUNHO' %}Enviar para revisão
                         {% elif post.status == 'EM_REVISAO' %}Publicar
@@ -18,6 +19,8 @@
                         {% endif %}
                     </button>
                 </form>
+            {% elif post.status == 'EM_REVISAO' %}
+                <em>Aguardando aprovação do editor</em>
             {% endif %}
         </article>
     {% empty %}
