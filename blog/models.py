@@ -29,6 +29,43 @@ class Tag(models.Model):
         return self.nome
 
 
+class Blog(models.Model):
+    nome = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+    descricao = models.TextField(blank=True)
+    dono = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blogs')
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.nome)
+        super().save(*args, **kwargs)
+
+    def papel_de(self, user):
+        membro = self.membros.filter(usuario=user).first()
+        return membro.papel if membro else None
+
+    def __str__(self):
+        return self.nome
+
+
+class Membro(models.Model):
+    class Papel(models.TextChoices):
+        DONO = 'DONO', 'Dono'
+        EDITOR = 'EDITOR', 'Editor'
+        AUTOR = 'AUTOR', 'Autor'
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='participacoes')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='membros')
+    papel = models.CharField(max_length=10, choices=Papel.choices, default=Papel.AUTOR)
+
+    class Meta:
+        unique_together = ('usuario', 'blog')
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.get_papel_display()} em {self.blog.nome}'
+
+
 class Post(models.Model):
     class Status(models.TextChoices):
         RASCUNHO = 'RASCUNHO', 'Rascunho'
@@ -41,6 +78,7 @@ class Post(models.Model):
     conteudo = models.TextField()
     imagem_capa = models.ImageField(upload_to='capas/', blank=True, null=True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, related_name='posts')
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.RASCUNHO)
@@ -78,4 +116,4 @@ class Comentario(models.Model):
     criado_em = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Comentário de {self.autor_nome} em {self.post.titulo}'
+      return f'Comentário de {self.autor_nome} em {self.post.titulo}'

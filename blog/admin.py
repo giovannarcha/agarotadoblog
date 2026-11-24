@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, Tag, Post, Comentario
+from .models import Categoria, Tag, Post, Comentario, Blog, Membro
 
 
 @admin.register(Categoria)
@@ -14,10 +14,22 @@ class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('nome',)}
 
 
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'dono', 'criado_em')
+    prepopulated_fields = {'slug': ('nome',)}
+
+
+@admin.register(Membro)
+class MembroAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'blog', 'papel')
+    list_filter = ('blog', 'papel')
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'autor', 'categoria', 'status', 'criado_em')
-    list_filter = ('status', 'categoria')
+    list_display = ('titulo', 'autor', 'blog', 'categoria', 'status', 'criado_em')
+    list_filter = ('status', 'blog', 'categoria')
     prepopulated_fields = {'slug': ('titulo',)}
     filter_horizontal = ('tags',)
 

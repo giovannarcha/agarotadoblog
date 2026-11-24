@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Posts aguardando revisão ✦</h2>
+
+    {% for post in posts %}
+        <article>
+            <h3>{{ post.titulo }}</h3>
+            <p>Blog: {{ post.blog.nome }} · por {{ post.autor.username }}</p>
+            <p>{{ post.conteudo|truncatewords:40 }}</p>
+            <form method="post" action="{% url 'avancar_status' post.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="revisao">
+                <button type="submit">Aprovar e publicar</button>
+            </form>
+        </article>
+    {% empty %}
+        <p>Nenhum post esperando revisão.</p>
+    {% endfor %}
+{% endblock %}

@@ -12,13 +12,17 @@
             {% if user.is_authenticated %}
                 <span class="saudacao">Olá, {{ user.username }}</span>
                 <a href="{% url 'welcome' %}">Welcome</a>
+                <a href="{% url 'lista_blogs' %}">Blogs</a>
                 <a href="{% url 'meus_posts' %}">Meus posts</a>
+                <a href="{% url 'revisao' %}">Revisão</a>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
                 <form method="post" action="{% url 'logout' %}" style="display:inline">
                     {% csrf_token %}
                     <button type="submit" class="btn-sair">Sair</button>
                 </form>
             {% else %}
                 <a href="{% url 'welcome' %}">Welcome</a>
+                <a href="{% url 'lista_blogs' %}">Blogs</a>
                 <a href="{% url 'login' %}">Entrar</a>
             {% endif %}
         </nav>
@@ -38,11 +42,3 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="widget">
-                <h3>Total de posts</h3>
-                <p>{{ sidebar_total_posts }} publicados</p>
-            </div>
-        </aside>
-    </main>
-</body>
-</html>

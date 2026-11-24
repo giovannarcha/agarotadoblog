@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Blogs ✦</h2>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'criar_blog' %}" class="btn-pill">+ Criar meu blog</a>
+    {% endif %}
+
+    <div class="grid-cards">
+        {% for b in blogs %}
+            <a href="{% url 'detalhe_blog' b.slug %}" class="card-post">
+                <div class="card-post-info">
+                    <h3>{{ b.nome }}</h3>
+                    <span class="card-autor">por {{ b.dono.username }}</span><br>
+                    <span class="card-data">{{ b.num_posts }} posts publicados</span>
+                </div>
+            </a>
+        {% empty %}
+            <p>Nenhum blog criado ainda.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

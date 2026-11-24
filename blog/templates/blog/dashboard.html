@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <h2>Dashboard ✦</h2>
+
+    <div class="grid-topicos">
+        <div class="topico">
+            <h3>📚 Blogs</h3>
+            <p>{{ total_blogs }}</p>
+        </div>
+        <div class="topico">
+            <h3>📝 Posts</h3>
+            <p>{{ total_posts }}</p>
+        </div>
+        <div class="topico">
+            <h3>💬 Comentários</h3>
+            <p>{{ total_comentarios }}</p>
+        </div>
+    </div>
+
+    <section>
+        <h3>Posts por status</h3>
+        <div class="grid-topicos">
+            {% for s in por_status %}
+                <div class="topico">
+                    <h3>{{ s.nome }}</h3>
+                    <p>{{ s.total }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <h3>Posts mais comentados</h3>
+        {% for p in mais_comentados %}
+            <p><a href="{% url 'detalhe_post' p.slug %}">{{ p.titulo }}</a> — 💬 {{ p.num_comentarios }}</p>
+        {% empty %}
+            <p>Ainda não há posts publicados.</p>
+        {% endfor %}
+    </section>
+
+    <section>
+        <h3>Resumo por blog</h3>
+        {% for b in resumo_blogs %}
+            <p><strong>{{ b.nome }}</strong> — {{ b.total_posts }} posts, {{ b.total_comentarios }} comentários</p>
+        {% empty %}
+            <p>Você ainda não é dona ou editora de nenhum blog.</p>
+        {% endfor %}
+    </section>
+{% endblock %}
